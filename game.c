@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:46:51 by jquinodo          #+#    #+#             */
-/*   Updated: 2024/11/26 14:46:57 by jquinodo         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:33:58 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,13 @@ int	key_handler(int key_code, t_game *game)
 	int	move_response;
 
 	if (key_code == ESC)
+	{
+		ft_printf("--------------------------------------------------\n");
+		ft_printf("|             Tu as gave up :(                    |\n");
+		ft_printf("|                  SERIEUX      !!!               |\n");
+		ft_printf("--------------------------------------------------\n");
 		exit_game(game);
+	}
 	if (key_code == W || key_code == UP)
 		move_response = move(game, 0, -1);
 	else if (key_code == S || key_code == DOWN)
@@ -59,7 +65,12 @@ int	key_handler(int key_code, t_game *game)
 		return (0);
 	if (move_response == 1)
 	{
-		ft_printf("###   YOU WON THE GAME TOTAL %d STEPS!   ###\n",
+		ft_printf("--------------------------------------------------\n");
+		ft_printf("|   🎉🎉🎉  Congratulations!!!!!  🎉🎉🎉         |\n");
+		ft_printf("|              BRAVO    BG                       |\n");
+		ft_printf("|              TU AS GAGNÉ     !!!               |\n");
+		ft_printf("--------------------------------------------------\n");
+		ft_printf("###        TON SCORE EST DE   %d STEPS    !    ###\n\n\n",
 			game->move_count);
 		exit_game(game);
 	}
