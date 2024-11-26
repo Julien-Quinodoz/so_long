@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:45:03 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/10/30 20:45:04 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/01 09:46:12 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/16 10:18:40 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	ft_tolower(int c)
 {
-	if (c >= 'A' && c <= 'Z')
-	{
-		c += 32;
-	}
+	if (c >= 65 && c <= 90)
+		return (c + 32);
 	return (c);
 }
+/*
+convertit une lettre majuscule en lettre minuscule correspondante.
+*/

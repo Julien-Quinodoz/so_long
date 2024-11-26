@@ -3,103 +3,136 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/23 19:23:57 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/12/25 19:54:11 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/30 08:09:30 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/11/06 10:32:56 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	find_next_line(char *arr)
+char	*ft_join(char *buffer, char *buf)
 {
-	int	i;
+	char	*temp;
 
-	i = 0;
-	while (arr[i] != '\0')
-	{
-		if (arr[i] == '\n')
-		{
-			i++;
-			break ;
-		}
-		i++;
-	}
-	return (i);
+	temp = ft_strjoin(buffer, buf);
+	free(buffer);
+	return (temp);
 }
 
-static char	*read_lines(int fd, char *arr)
+char	*ft_next(char *buffer)
 {
-	int		bytes_read;
-	char	buff[BUFFER_SIZE + 1];
-
-	bytes_read = read(fd, buff, BUFFER_SIZE);
-	while (bytes_read > 0)
-	{
-		buff[bytes_read] = '\0';
-		arr = gnl_strjoin(arr, buff);
-		if (buff[find_next_line(buff) - 1] == '\n')
-			break ;
-		bytes_read = read(fd, buff, BUFFER_SIZE);
-	}
-	if (bytes_read == -1)
-	{
-		free(arr);
-		return (0);
-	}
-	return (arr);
-}
-
-static char	*get_a_line(char *arr)
-{
-	char	*line;
 	int		i;
-	int		len;
+	int		j;
+	char	*line;
 
-	if (arr == 0)
-		return (0);
-	len = find_next_line(arr);
 	i = 0;
-	line = (char *)malloc(sizeof(char) * (len + 1));
-	if (line == 0)
-		return (0);
-	while (i < len)
-	{
-		line[i] = arr[i];
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
+	if (!buffer[i])
+	{
+		free(buffer);
+		return (NULL);
 	}
-	line[len] = '\0';
+	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
+	i++;
+	j = 0;
+	while (buffer[i])
+		line[j++] = buffer[i++];
+	free(buffer);
 	return (line);
 }
 
-static char	*control_line(char *line)
+char	*ft_new_line(char *buffer)
 {
-	char	*arr;
-	size_t	after_nl_index;
+	char	*new_line;
+	int		i;
 
-	if (line == 0)
-		return (0);
-	after_nl_index = find_next_line(line);
-	if (line[after_nl_index] == '\0')
+	i = 0;
+	if (!buffer[i])
+		return (NULL);
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	new_line = ft_calloc(i + 2, sizeof(char));
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
 	{
-		free(line);
-		return (0);
+		new_line[i] = buffer[i];
+		i++;
 	}
-	arr = gnl_strdup(&line[after_nl_index]);
-	free(line);
-	return (arr);
+	if (buffer[i] && buffer[i] == '\n')
+		new_line[i++] = '\n';
+	return (new_line);
+}
+
+char	*read_file(int fd, char *res)
+{
+	char	*buffer_tmp;
+	int		byte_read;
+
+	if (!res)
+		res = ft_calloc(1, 1);
+	buffer_tmp = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	byte_read = 1;
+	while (byte_read > 0)
+	{
+		byte_read = read(fd, buffer_tmp, BUFFER_SIZE);
+		if (byte_read == -1)
+		{
+			free(buffer_tmp);
+			free(res);
+			return (NULL);
+		}
+		buffer_tmp[byte_read] = 0;
+		res = ft_join(res, buffer_tmp);
+		if (ft_strchr(buffer_tmp, '\n'))
+			break ;
+	}
+	free(buffer_tmp);
+	return (res);
 }
 
 char	*get_next_line(int fd)
 {
+	static char	*buffer;
 	char		*line;
-	static char	*arr;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	arr = read_lines(fd, arr);
-	line = get_a_line(arr);
-	arr = control_line(arr);
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(buffer);
+		buffer = NULL;
+		return (NULL);
+	}
+	buffer = read_file(fd, buffer);
+	if (!buffer)
+		return (NULL);
+	line = ft_new_line(buffer);
+	buffer = ft_next(buffer);
 	return (line);
 }
+/*
+#include <stdio.h>
+#include <fcntl.h>
+
+int main()
+{
+	int fd1;
+	char *line1;
+	int i;
+
+	i = 1;
+	fd1 = open("t3.txt", O_RDONLY);
+
+	while(i < 10)
+	{
+		line1 = get_next_line(fd1);
+		printf("\n");
+		printf("line %d ---> \n %s \n", i , line1);
+		printf("††††††††††††††††††††††††††††††††\n");
+		i++;
+	}
+	free(line1);
+	return (0);
+}
+*/

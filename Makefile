@@ -6,7 +6,7 @@
 #    By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/26 14:47:47 by jquinodo          #+#    #+#              #
-#    Updated: 2024/11/26 14:47:49 by jquinodo         ###   ########.fr        #
+#    Updated: 2024/11/26 18:55:26 by jquinodo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ GET_NEXT_LINE_PATH = lib/get_next_line
 MLX = libmlx.a
 LIBFT = libft.a
 FT_PRINTF = libftprintf.a
-GET_NEXT_LINE = libftgnl.a
+GET_NEXT_LINE = gnl.a
 
 LIBRARY = -L $(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
 

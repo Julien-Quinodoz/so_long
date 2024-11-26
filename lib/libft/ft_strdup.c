@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:40:15 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/10/30 20:43:13 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/01 09:37:35 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/16 10:52:06 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,29 @@
 
 char	*ft_strdup(const char *s1)
 {
-	size_t	len;
-	char	*s2;
+	size_t		i;
+	char		*s2;
 
-	len = ft_strlen(s1) + 1;
-	s2 = (char *)malloc(len);
-	if (s2 == 0)
-		return (0);
-	ft_memcpy(s2, s1, len);
+	i = 0;
+	s2 = malloc(sizeof(char) * ft_strlen(s1) + 1);
+	if (!s1 || !s2)
+		return (NULL);
+	while (s1[i])
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = '\0';
 	return (s2);
 }
+/*
+
+DESCRIPTION
+    La fonction strdup() alloue suffisamment de mémoire pour une copie
+	de la chaîne s1,
+	effectue la copie et renvoie un pointeur vers celle-ci.
+	 Le pointeur peut ensuite être utilisé comme argument de la fonction free(3).
+
+	Si la mémoire disponible est insuffisante,
+	NULL est renvoyé
+*/

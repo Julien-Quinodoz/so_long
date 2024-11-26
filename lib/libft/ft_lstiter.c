@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:40:06 by fatkeski          #+#    #+#             */
-/*   Updated: 2024/11/26 07:32:49 by jquinodo         ###   ########.fr       */
+/*   Created: 2024/10/01 10:11:31 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/16 15:14:57 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	while (*s != '\0')
+	while (lst)
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		f(lst->content);
+		lst = lst->next;
 	}
-	if ((char)c == 0)
-		return ((char *)s);
-	return (0);
 }
+/*
+Paramètres
+lst: L’adresse du pointeur vers un élément.
+f: L’adresse de la fonction à appliquer.
+
+Itère sur la liste ’lst’ et applique la fonction ’f’ au contenu chaque élément.
+
+*/

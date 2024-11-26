@@ -3,63 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:34:46 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/10/30 20:35:19 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/01 09:58:28 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/17 15:45:01 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	calculate_len(int n)
+static int	len_int(long num)
 {
-	int	len;
+	int	i;
 
-	len = 0;
-	if (n <= 0)
-		len = 1;
-	while (n != 0)
+	i = 0;
+	if (num == 0)
+		return (1);
+	if (num < 0)
+		i++;
+	while (num != 0)
 	{
-		n = (n / 10);
-		len++;
+		num = num / 10;
+		i++;
 	}
-	return (len);
-}
-
-static char	*create_n(char *arr, int n, int len)
-{
-	while (len >= 0)
-	{
-		arr[len] = (n % 10) + 48;
-		n = n / 10;
-		len--;
-	}
-	return (arr);
+	return (i);
 }
 
 char	*ft_itoa(int n)
 {
-	int		len;
-	char	*arr;
+	long	len;
+	long	nb;
+	char	*result;
 
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	len = calculate_len(n);
-	arr = (char *)malloc(sizeof(char) * (len + 1));
-	if (!arr)
-		return (0);
-	arr[len] = '\0';
-	len = len - 1;
-	if (n == 0)
-		arr[0] = '0';
-	else if (n < 0)
-	{
-		n = -n;
-		arr[0] = '-';
-		create_n(&arr[1], n, len - 1);
-	}
+	len = len_int(n);
+	nb = n;
+	if (n < 0)
+		nb *= -1;
+	result = malloc(sizeof(char) * (len + 1));
+	if (!result)
+		return (NULL);
+	result[len] = 0;
+	if (nb == 0)
+		result[0] = '0';
 	else
-		create_n(arr, n, len);
-	return (arr);
+	{
+		while (len--, nb != 0)
+		{
+			result[len] = (nb % 10) + '0';
+			nb = (nb - (nb % 10)) / 10;
+		}
+		if (n < 0)
+			result[len] = '-';
+	}
+	return (result);
 }
+/*
+int  to  Ascii
+Alloue (avec malloc) et renvoie une chaîne représentant
+l'entier reçu en argument.
+Les nombres négatifs doivent être gérés.
+*/

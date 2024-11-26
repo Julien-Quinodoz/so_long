@@ -3,92 +3,109 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:20:25 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/12/11 15:58:20 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/22 13:53:09 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/24 15:05:40 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	print_char(char c)
+int	ft_putchar(char c)
 {
-	ft_putchar_fd(c, 1);
-	return (1);
+	return (write(1, &c, 1));
 }
 
-int	print_str(char *s)
+int	ft_putnbr(long nb)
 {
-	int	i;
+	long		num;
+	int			i;
+	int			aux;
 
 	i = 0;
-	if (s == 0)
+	if (nb < 0)
 	{
-		ft_putstr_fd("(null)", 1);
-		return (6);
+		if (write(1, "-", 1) == -1)
+			return (-1);
+		i += 1;
+		nb *= -1;
 	}
-	while (s && s[i] != '\0')
+	num = nb % 10 + '0';
+	if (nb > 9)
 	{
-		write(1, &s[i], 1);
-		i++;
+		aux = ft_putnbr(nb / 10);
+		if (aux == -1)
+			return (-1);
+		i += aux;
 	}
+	if (write(1, &num, 1) == -1)
+		return (-1);
+	i += 1;
 	return (i);
 }
 
-int	print_pointer(size_t nbr, int *count)
+int	ft_putnbr_hexa(unsigned long nbr, char up)
 {
-	if (nbr >= 16)
-	{
-		print_pointer(nbr / 16, count);
-		print_pointer(nbr % 16, count);
-	}
+	int		len;
+	int		mod;
+	char	*base;
+	int		aux;
+
+	mod = 0;
+	len = 0;
+	if (up == 'X')
+		base = "0123456789ABCDEF";
 	else
+		base = "0123456789abcdef";
+	if (nbr > 15)
 	{
-		ft_putchar_fd("0123456789abcdef"[nbr], 1);
-		(*count)++;
+		aux = ft_putnbr_hexa((nbr / 16), up);
+		if (aux == -1)
+			return (-1);
+		len += aux;
 	}
-	return (*count);
+	mod = nbr % 16;
+	if (write(1, &base[mod], 1) == -1)
+		return (-1);
+	len += 1;
+	return (len);
 }
 
-int	print_int(int nbr, int *count)
+int	ft_putptr(void *ptr)
 {
-	long	nb;
+	int	len;
+	int	aux;
 
-	nb = nbr;
-	if (nb < 0)
-	{
-		ft_putchar_fd('-', 1);
-		(*count)++;
-		nb = -nb;
-	}
-	if (nb >= 10)
-	{
-		print_int(nb / 10, count);
-		print_int(nb % 10, count);
-	}
-	else
-	{
-		ft_putchar_fd(nb + 48, 1);
-		(*count)++;
-	}
-	return (*count);
+	len = 0;
+	aux = 0;
+	if (ft_putstr("0x") == -1)
+		return (-1);
+	len += 2;
+	aux = ft_putnbr_hexa((unsigned long)ptr, 'x');
+	if (aux == -1)
+		return (-1);
+	len += aux;
+	return (len);
 }
 
-int	putnbr_base(unsigned int nb, char *base, int *count)
+int	ft_putstr(char *str1)
 {
-	unsigned int	base_len;
+	int	len;
 
-	base_len = ft_strlen(base);
-	if (nb >= base_len)
+	if (!str1)
 	{
-		putnbr_base(nb / base_len, base, count);
-		putnbr_base(nb % base_len, base, count);
+		if (write (1, "(null)", 6) == -1)
+			return (-1);
+		return (6);
 	}
-	else
+	len = 0;
+	while (*str1 != '\0')
 	{
-		ft_putchar_fd(base[nb], 1);
-		(*count)++;
+		if (write(1, str1, 1) == -1)
+			return (-1);
+		len++;
+		str1++;
 	}
-	return (*count);
+	return (len);
 }

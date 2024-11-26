@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:44:49 by fatkeski          #+#    #+#             */
-/*   Updated: 2024/11/26 07:22:50 by jquinodo         ###   ########.fr       */
+/*   Created: 2024/10/01 09:40:59 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/15 15:50:13 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,35 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	len;
+	char	*ptr;
 
-	len = (int)ft_strlen(s);
-	while (len >= 0)
+	ptr = NULL;
+	while (*s)
 	{
-		if (s[len] == (char)c)
-			return (&(((char *)s)[len]));
-		len--;
+		if (*s == (char)c)
+			ptr = (char *)s;
+		s++;
 	}
-	return (0);
+	if (*s == (char)c)
+		return ((char *)s);
+	return (ptr);
 }
+/*
+Explication compréhensible
+la fonction fait la même chose que strchr,
+ mais localise la dernière occurrence de c.
+
+ explication strchr:
+La fonction recherche un caractère dans une chaîne.
+Si elle trouve le caractère, elle renvoie un pointeur vers la première
+ occurrence de ce caractère spécifique.
+
+S'il ne trouve aucune occurrence de ce caractère, il renvoie NULL.
+
+
+retour :
+Nous devons également renvoyer un pointeur vers le caractère
+si le caractère est \0.
+
+
+*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 19:36:50 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/10/30 20:45:39 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/01 09:45:55 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/16 10:17:33 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	ft_toupper(int c)
 {
-	if (c >= 'a' && c <= 'z')
-	{
-		c -= 32;
-	}
+	if (c >= 97 && c <= 122)
+		return (c - 32);
 	return (c);
 }
+/*
+convertit une lettre minuscule en la lettre majuscule correspondante.
+*/

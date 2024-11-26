@@ -3,68 +3,122 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:39:51 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/10/30 21:39:49 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/01 09:58:08 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/17 09:16:50 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	wordcounter(char const *s, char c)
-{
-	int	i;
-	int	count;
+static int	word_count(const char *str, char c);
+static char	*fill_word(const char *str, int start, int end);
+static void	*ft_free(char **strs, int count);
+static void	ft_initiate_vars(size_t *i, int *j, int *s_word);
 
-	i = 0;
-	count = 0;
-	while (*s)
+char	**ft_split(const char *s, char c)
+{
+	char	**res;
+	size_t	i;
+	int		j;
+	int		s_word;
+
+	ft_initiate_vars(&i, &j, &s_word);
+	res = ft_calloc((word_count(s, c) + 1), sizeof(char *));
+	if (!res)
+		return (NULL);
+	while (i <= ft_strlen(s))
 	{
-		while (s[i] == c && s[i])
-			i++;
-		if (s[i] == '\0')
-			return (count);
-		while (s[i] != c && s[i])
-			i++;
-		count++;
+		if (s[i] != c && s_word < 0)
+			s_word = i;
+		else if ((s[i] == c || i == ft_strlen(s)) && s_word >= 0)
+		{
+			res[j] = fill_word(s, s_word, i);
+			if (!(res[j]))
+				return (ft_free(res, j));
+			s_word = -1;
+			j++;
+		}
+		i++;
 	}
-	return (count);
+	return (res);
 }
 
-static int	charlencounter(char const *s, char c)
+static void	ft_initiate_vars(size_t *i, int *j, int *s_word)
+{
+	*i = 0;
+	*j = 0;
+	*s_word = -1;
+}
+
+static void	*ft_free(char **strs, int count)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] && s[i] != c)
+	while (i < count)
+	{
+		free(strs[i]);
 		i++;
-	return (i);
+	}
+	free(strs);
+	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+static char	*fill_word(const char *str, int start, int end)
 {
-	int		index;
-	char	**str;
+	char	*word;
 	int		i;
 
 	i = 0;
-	index = 0;
-	if (!s)
-		return (0);
-	str = (char **)malloc(sizeof(char *) * (wordcounter(s, c) + 1));
-	if (!str)
-		return (0);
-	while (s[i])
+	word = malloc((end - start + 1) * sizeof(char));
+	if (!word)
+		return (NULL);
+	while (start < end)
 	{
-		while (s[i] == c)
-			i++;
-		if (s[i] == '\0')
-			break ;
-		str[index] = ft_substr(s + i, 0, charlencounter(s + i, c));
-		index++;
-		i += charlencounter(s + i, c);
+		word[i] = str[start];
+		i++;
+		start++;
 	}
-	str[index] = 0;
-	return (str);
+	word[i] = 0;
+	return (word);
 }
+
+static int	word_count(const char *str, char c)
+{
+	int	count;
+	int	x;
+
+	count = 0;
+	x = 0;
+	while (*str)
+	{
+		if (*str != c && x == 0)
+		{
+			x = 1;
+			count++;
+		}
+		else if (*str == c)
+			x = 0;
+		str++;
+	}
+	return (count);
+}
+/*
+Alloue (avec malloc) et renvoie un tableau de chaînes
+obtenu en divisant 's' en utilisant le caractère 'c' comme délimiteur.$
+(=> un tableau de tableaux, puisque les chaînes sont des tableaux de
+ caractères terminés par un caractère NUL).
+
+Nous pouvons également formuler cela sous forme de tableau de mots,
+nous prenons la chaîne set nous la divisons pour obtenir un tableau
+contenant chacun de ses mots. Chaque mot est séparé par un ou plusieurs c,
+c'est notre délimiteur de mots.
+
+il est également dit que notre tableau de mots doit être terminé par NUL.
+Cela signifie que nous devons allouer un élément supplémentaire dans
+ notre tableau, que nous pouvons définir à 0. En faisant cela, nous avons
+  un moyen simple de faire une boucle sur notre tableau de mots, de la
+  même manière que pour une chaîne : while(words[i] != 0).
+*/

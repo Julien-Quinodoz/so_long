@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:40:06 by fatkeski          #+#    #+#             */
-/*   Updated: 2024/11/26 07:26:02 by jquinodo         ###   ########.fr       */
+/*   Created: 2024/10/01 09:40:38 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/16 10:51:37 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,34 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	while (*s != '\0')
+	int		i;
+	char	ch;
+	char	*str;
+
+	i = 0;
+	ch = (char)c;
+	str = (char *)s;
+	while (str[i])
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		if (str[i] == ch)
+			return (str + i);
+		i++;
 	}
-	if ((char)c == 0)
-		return ((char *)s);
-	return (0);
+	if (str[i] == '\0' && ch == '\0')
+		return (str + i);
+	return (NULL);
 }
+/*
+Explication compréhensible
+La fonction recherche un caractère dans une chaîne.
+Si elle trouve le caractère, elle renvoie un pointeur vers la première
+ occurrence de ce caractère spécifique.
+
+S'il ne trouve aucune occurrence de ce caractère, il renvoie NULL.
+
+
+retour :
+Nous devons également renvoyer un pointeur vers le caractère
+si le caractère est \0.
+
+*/

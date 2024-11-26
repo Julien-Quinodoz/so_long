@@ -1,30 +1,36 @@
-SRCS =	ft_printf.c \
-		ft_printf_utils.c
-
-OBJS = $(SRCS:.c=.o)
-
-CC = gcc
-
-RM = rm -rf
-
-CFLAGS = -Wall -Wextra -Werror
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/10/22 13:50:51 by jquinodo          #+#    #+#              #
+#    Updated: 2024/10/24 15:11:57 by jquinodo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME = libftprintf.a
 
+SRC = ft_printf.c ft_printf_utils.c
+
 all: $(NAME)
 
+CC = gcc
+
+
+CFLAGS = -Wall -Wextra -Werror
+
+OBJS = $(SRC:.c=.o)
+
 $(NAME): $(OBJS)
-	make -C libft
-	cp libft/libft.a $(NAME)
-	ar rcs $(NAME) $(OBJS)
+	ar rcs ${NAME} ${OBJS}
 
 clean:
-	make clean -C libft
-	$(RM) $(OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
-	make fclean -C libft
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 

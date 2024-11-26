@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:34:34 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/10/30 20:35:14 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/11/26 19:02:49 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/11/26 19:02:53 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

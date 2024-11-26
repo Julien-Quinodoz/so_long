@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:43:55 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/10/30 20:43:56 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/01 09:38:28 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/15 16:05:13 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,40 @@
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
-	size_t	len;
 
 	i = 0;
-	len = ft_strlen(src);
-	if (dstsize > 0)
+	if (dstsize == 0)
 	{
-		while ((src[i] != '\0') && (i < dstsize - 1))
-		{
-			dst[i] = src[i];
+		while (src[i])
 			i++;
-		}
-		dst[i] = '\0';
+		return (i);
 	}
-	return (len);
+	while (i < dstsize - 1 && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	if (i < dstsize)
+		dst[i] = '\0';
+	while (src[i])
+		i++;
+	return (i);
 }
+/*
+la fonction copie une chaîne dans une autre,
+mais elle termine toujours
+par NUL
+
+Si  dstsize est suffisament long pour terminer la chaîne par NUL sans
+la tronquer, la fonction copiera simplement la chaîne, comme vous le
+feriez avec strcpy().
+Si vous ne donnez pas un dstsize suffisament long,
+ cela copiera        dstsize - 1
+les caractères de la source vers la destination, en ajoutant ensuite le
+caractère de terminaison NUL.
+
+retour:
+la fonction renvoie toujours la longueur de la chaîne qu'elle a essayé de créer,
+c'est la longueur de src, même si vous devez tronquer la chaîne pour
+la terminer par NUL.
+*/

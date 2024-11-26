@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/11/26 18:54:57 by jquinodo          #+#    #+#              #
+#    Updated: 2024/11/26 18:55:37 by jquinodo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRCS =	get_next_line.c \
 		get_next_line_utils.c
 
@@ -9,7 +21,7 @@ RM = rm -rf
 
 CFLAGS = -Wall -Wextra -Werror
 
-NAME = libftgnl.a
+NAME = gnl.a
 
 all: $(NAME)
 

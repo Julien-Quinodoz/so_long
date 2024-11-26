@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:39:46 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/10/30 20:39:47 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/01 10:09:11 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/16 10:35:47 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	ft_putstr_fd(char *s, int fd)
 	int	i;
 
 	i = 0;
-	while (s && s[i] != '\0')
+	while (s[i])
 	{
 		write(fd, &s[i], 1);
 		i++;
 	}
 }
+/*
+ecrit une string  sur sortie donnée ( fd )
+*/

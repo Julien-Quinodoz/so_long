@@ -3,28 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:44:41 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/10/30 20:48:00 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/01 09:41:49 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/10/15 16:21:19 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
+	size_t	j;
 
+	if (*little == '\0')
+		return ((char *) big);
 	i = 0;
-	if (ft_strlen(needle) == 0)
-		return ((char *)haystack);
-	while ((i < len) && (haystack[i] != '\0'))
+	while (big[i] && i < len)
 	{
-		if ((ft_strncmp(&haystack[i], needle, ft_strlen(needle)) == 0) && (i
-				+ ft_strlen(needle) <= len))
-			return (&((char *)haystack)[i]);
+		j = 0;
+		while (big [i + j] == little[j] && (i + j) < len)
+		{
+			j++;
+			if (little[j] == '\0')
+				return ((char *) big + i);
+		}
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
+/*
+La strnstr()fonction fonctionne de la même manière que strchr()
+mais recherche une sous-chaîne complète avec un maximum   n   caractères
+au lieu d'un seul caractère.
+*/

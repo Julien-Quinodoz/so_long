@@ -3,67 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatkeski <fatkeski@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/23 19:23:47 by fatkeski          #+#    #+#             */
-/*   Updated: 2023/12/25 19:54:55 by fatkeski         ###   ########.fr       */
+/*   Created: 2024/10/30 08:09:27 by jquinodo          #+#    #+#             */
+/*   Updated: 2024/11/06 10:36:45 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	gnl_strlen(const char *s)
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		sizetotal;
+	char	*res;
+	int		i;
+	int		j;
+
+	i = 0;
+	sizetotal = ft_strlen(s1) + ft_strlen(s2);
+	res = malloc(sizeof(char) * (sizetotal + 1));
+	if (!res || !s1 || !s2)
+		return (NULL);
+	while (s1[i] != 0)
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j] != 0)
+	{
+		res[i] = s2[j];
+		i++;
+		j++;
+	}
+	res[sizetotal] = 0;
+	return (res);
+}
+
+char	*ft_strchr(const char *string, int c)
+{
+	char	*str;
+
+	str = (char *)string;
+	while (*str != c && *str != 0)
+		str++;
+	if (*str == c)
+		return (str);
+	else
+		return (NULL);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	char	*str;
+	size_t	i;
+
+	str = (char *)s;
+	i = 0;
+	while (i < n)
+	{
+		str[i] = '\0';
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t Count, size_t Size)
+{
+	char	*res;
+
+	res = malloc(Size * Count);
+	if (!res)
+		return (NULL);
+	ft_bzero(res, Size * Count);
+	return (res);
+}
+
+size_t	ft_strlen(const char *str)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] != '\0')
-	{
+	while (str[i])
 		i++;
-	}
 	return (i);
-}
-
-char	*gnl_strdup(char *arr)
-{
-	size_t	i;
-	char	*new_line;
-
-	new_line = (char *)malloc(sizeof(char) * (gnl_strlen(arr) + 1));
-	if (new_line == 0)
-		return (0);
-	i = 0;
-	while (arr[i] != '\0')
-	{
-		new_line[i] = arr[i];
-		i++;
-	}
-	new_line[i] = '\0';
-	return (new_line);
-}
-
-char	*gnl_strjoin(char *arr, char *buff)
-{
-	char	*new_arr;
-	size_t	i;
-	size_t	j;
-
-	if (arr == 0)
-		arr = gnl_strdup("");
-	new_arr = (char *)malloc(sizeof(char) * (gnl_strlen(arr) + gnl_strlen(buff)
-				+ 1));
-	if (new_arr == 0)
-		return (0);
-	i = 0;
-	while (arr[i] != '\0')
-	{
-		new_arr[i] = arr[i];
-		i++;
-	}
-	j = 0;
-	while (buff[j] != '\0')
-		new_arr[i++] = buff[j++];
-	new_arr[i] = '\0';
-	free(arr);
-	return (new_arr);
 }
