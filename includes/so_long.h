@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 21:13:42 by fatkeski          #+#    #+#             */
-/*   Updated: 2024/11/26 14:51:28 by jquinodo         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:12:16 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,16 @@ typedef struct s_map
 
 typedef struct s_img
 {
-	void		*floor;
-	void		*wall;
-	void		*collectible;
-	void		*player;
-	void		*exit;
-	}				t_img;
+    void    *floor;
+    void    *wall;
+    void    *collectible;
+    void    *player;
+    void    *player_up;
+    void    *player_down;
+    void    *player_left;
+    void    *player_right;
+    void    *exit;
+}               t_img;
 
 typedef struct s_game
 {
@@ -101,5 +105,6 @@ void			put_image_to_window(t_game *game);
 int				key_handler(int key_code, t_game *game);
 int				exit_game(t_game *game);
 void			free_map(char **map);
+void			update_player_image(t_game *game, int step_x, int step_y);
 
 #endif

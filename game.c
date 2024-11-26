@@ -6,11 +6,23 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:46:51 by jquinodo          #+#    #+#             */
-/*   Updated: 2024/11/26 16:33:58 by jquinodo         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:09:42 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/so_long.h"
+
+void update_player_image(t_game *game, int step_x, int step_y)
+{
+    if (step_y == -1)
+        game->img_ptr.player = game->img_ptr.player_up;
+    else if (step_y == 1)
+        game->img_ptr.player = game->img_ptr.player_down;
+    else if (step_x == -1)
+        game->img_ptr.player = game->img_ptr.player_left;
+    else if (step_x == 1)
+        game->img_ptr.player = game->img_ptr.player_right;
+}
 
 static int	move(t_game *game, int step_x, int step_y)
 {
@@ -22,6 +34,7 @@ static int	move(t_game *game, int step_x, int step_y)
 		+ step_x];
 	if (next != WALL)
 	{
+		update_player_image(game, step_x, step_y);
 		(game->move_count)++;
 		ft_printf("movement: %d\n", game->move_count);
 		if (next == COLLECTIBLE)
