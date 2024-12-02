@@ -6,11 +6,9 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 08:47:51 by jquinodo          #+#    #+#             */
-/*   Updated: 2024/11/26 08:47:52 by jquinodo         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:09:48 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "includes/so_long.h"
 

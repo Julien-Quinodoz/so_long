@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:36 by jquinodo          #+#    #+#             */
-/*   Updated: 2024/11/26 18:33:52 by jquinodo         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:04:58 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,16 @@ static void	init_img_to_mlx(t_game *game)
 	int	width;
 	int	height;
 
-	game->img_ptr.floor = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &width, &height);
-	game->img_ptr.wall = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &width, &height);
-	game->img_ptr.collectible = mlx_xpm_file_to_image(game->mlx, "textures/collectible.xpm", &width, &height);
-	game->img_ptr.player_up = mlx_xpm_file_to_image(game->mlx, "textures/player_up.xpm", &width, &height);
-	game->img_ptr.player_down = mlx_xpm_file_to_image(game->mlx, "textures/player_down.xpm", &width, &height);
-	game->img_ptr.player_left = mlx_xpm_file_to_image(game->mlx, "textures/player_left.xpm", &width, &height);
-	game->img_ptr.player_right = mlx_xpm_file_to_image(game->mlx, "textures/player_right.xpm", &width, &height);
-	game->img_ptr.player = mlx_xpm_file_to_image(game->mlx, "textures/player.xpm", &width, &height);
-	game->img_ptr.exit = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm", &width, &height);
-
-	if (!game->img_ptr.floor || !game->img_ptr.wall || !game->img_ptr.collectible ||
-	    !game->img_ptr.player_up || !game->img_ptr.player_down ||
-	    !game->img_ptr.player_left || !game->img_ptr.player_right ||
-	    !game->img_ptr.exit)
+	game->img_ptr.floor = mlx_xpm_file_to_image(game->mlx, \
+	"textures/floor.xpm", &width, &height);
+	game->img_ptr.wall = mlx_xpm_file_to_image(game->mlx, \
+	"textures/wall.xpm", &width, &height);
+	game->img_ptr.collectible = mlx_xpm_file_to_image(game->mlx, \
+	"textures/collectible.xpm", &width, &height);
+	game->img_ptr.exit = mlx_xpm_file_to_image(game->mlx, \
+	"textures/exit.xpm", &width, &height);
+	if (!game->img_ptr.floor || !game->img_ptr.wall || \
+		!game->img_ptr.collectible || !game->img_ptr.exit)
 		print_error_message("Error: image cannot be initialized\n", game);
 }
 
@@ -88,6 +84,7 @@ void	create_game_interface(t_game *game)
 	if (!(game->mlx_window))
 		print_error_message("Error: mlx window cannot initialized\n", game);
 	init_img_to_mlx(game);
+	init_img_to_mlx_player(game);
 	put_image_to_window(game);
 	mlx_hook(game->mlx_window, KEY_PRESS, 0, key_handler, game);
 	mlx_hook(game->mlx_window, CROSS, 0, exit_game, game);

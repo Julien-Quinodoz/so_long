@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 21:11:00 by fatkeski          #+#    #+#             */
-/*   Updated: 2024/11/26 11:12:04 by jquinodo         ###   ########.fr       */
+/*   Updated: 2024/12/02 12:57:38 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	wall_check(t_game *game)
 {
 	int	i;
 
-	i = 0; 
+	i = 0;
 	while (i < game->map->width)
 	{
 		if ((game->map->vector[0][i] == WALL)

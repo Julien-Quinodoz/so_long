@@ -6,7 +6,7 @@
 #    By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/26 14:47:47 by jquinodo          #+#    #+#              #
-#    Updated: 2024/11/26 18:55:26 by jquinodo         ###   ########.fr        #
+#    Updated: 2024/12/02 14:10:02 by jquinodo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS =	map_check.c	\
 		error_management.c	\
 		map_validity_check.c	\
 		graphic_management.c	\
+		graphic_management_player.c \
 		game.c
 
 OBJS = $(SRCS:.c=.o)
